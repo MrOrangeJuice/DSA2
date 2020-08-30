@@ -5,8 +5,6 @@
 using namespace std;
 template <class T>
 
-#endif //queue.h
-
 class PriorityQueue
 {
 public:
@@ -159,3 +157,5 @@ private:
 	int pqueueArraySize;
 	int pqueueSize;
 };
+
+#endif //queue.h
