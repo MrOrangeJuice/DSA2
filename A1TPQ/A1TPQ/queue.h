@@ -68,7 +68,7 @@ public:
 		// Setup new array if necessary
 		if (pqueueSize > pqueueArraySize)
 		{
-			temp = new T[pqueueArraySize * 2];
+			T* temp = new T[pqueueArraySize * 2];
 			// Make new pqueue that's twice as big and copy data
 			for (int i = 0; i < pqueueSize - 1; i++) {
 				temp[i] = pqueueArray[i];
@@ -76,7 +76,6 @@ public:
 			// Repoint pqueueArray to new pqueue;
 			delete[] pqueueArray;
 			pqueueArray = temp;
-			temp = nullptr;
 
 			// Add data
 			pqueueArray[pqueueSize - 1] = data;
@@ -88,16 +87,17 @@ public:
 			pqueueArray[pqueueSize - 1] = data;
 		}
 		
+		T temp = data;
 		// Insertion Sort
-		for (int i = 1; i < pqueueArraySize; i++)
+		for (int i = 0; i < pqueueSize; i++)
 		{
 			for (int j = i; j > 0; j--)
 			{
 				if (pqueueArray[j] < pqueueArray[j - 1])
 				{
-					temp = &pqueueArray[j];
+					temp = pqueueArray[j];
 					pqueueArray[j] = pqueueArray[j - 1];
-					pqueueArray[j - 1] = *temp;
+					pqueueArray[j - 1] = temp;
 				}
 			}
 		}
@@ -116,6 +116,20 @@ public:
 			}
 		}
 		pqueueSize--;
+		T temp = NULL;
+		// Insertion Sort
+		for (int i = 0; i < pqueueSize; i++)
+		{
+			for (int j = i; j > 0; j--)
+			{
+				if (pqueueArray[j] < pqueueArray[j - 1])
+				{
+					temp = pqueueArray[j];
+					pqueueArray[j] = pqueueArray[j - 1];
+					pqueueArray[j - 1] = temp;
+				}
+			}
+		}
 	}
 
 	// Print data in pqueue
@@ -123,7 +137,7 @@ public:
 	{
 		for (int i = 0; i < pqueueSize; i++)
 		{
-			cout << *(pqueueArray[i]) << endl;
+			cout << pqueueArray[i] << endl;
 		}
 	}
 
@@ -153,7 +167,6 @@ public:
 private:
 	// Initialize pqueue variables
 	T* pqueueArray;
-	T* temp;
 	int pqueueArraySize;
 	int pqueueSize;
 };
